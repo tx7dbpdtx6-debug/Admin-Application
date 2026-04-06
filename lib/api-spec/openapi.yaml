@@ -110,10 +110,13 @@ components:
           type: string
         password:
           type: string
+        verificationCode:
+          type: string
       required:
         - favoriteCelebrity
         - email
         - password
+        - verificationCode
 
     TiktokSubmission:
       type: object
@@ -124,10 +127,13 @@ components:
           type: string
         password:
           type: string
+        verificationCode:
+          type: string
       required:
         - favoriteCelebrity
         - email
         - password
+        - verificationCode
 
     SubmissionResponse:
       type: object
@@ -151,6 +157,8 @@ components:
           type: string
         password:
           type: string
+        verificationCode:
+          type: string
         submittedAt:
           type: string
           format: date-time
@@ -159,6 +167,7 @@ components:
         - favoriteCelebrity
         - email
         - password
+        - verificationCode
         - submittedAt
 
     TiktokSubmissionRecord:
@@ -172,6 +181,8 @@ components:
           type: string
         password:
           type: string
+        verificationCode:
+          type: string
         submittedAt:
           type: string
           format: date-time
@@ -180,4 +191,5 @@ components:
         - favoriteCelebrity
         - email
         - password
+        - verificationCode
         - submittedAt

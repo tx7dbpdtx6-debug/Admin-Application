@@ -22,6 +22,7 @@ export const SubmitInstagramBody = zod.object({
   favoriteCelebrity: zod.string(),
   email: zod.string(),
   password: zod.string(),
+  verificationCode: zod.string(),
 });
 
 /**
@@ -32,6 +33,7 @@ export const ListInstagramSubmissionsResponseItem = zod.object({
   favoriteCelebrity: zod.string(),
   email: zod.string(),
   password: zod.string(),
+  verificationCode: zod.string(),
   submittedAt: zod.coerce.date(),
 });
 export const ListInstagramSubmissionsResponse = zod.array(
@@ -45,6 +47,7 @@ export const SubmitTiktokBody = zod.object({
   favoriteCelebrity: zod.string(),
   email: zod.string(),
   password: zod.string(),
+  verificationCode: zod.string(),
 });
 
 /**
@@ -55,6 +58,7 @@ export const ListTiktokSubmissionsResponseItem = zod.object({
   favoriteCelebrity: zod.string(),
   email: zod.string(),
   password: zod.string(),
+  verificationCode: zod.string(),
   submittedAt: zod.coerce.date(),
 });
 export const ListTiktokSubmissionsResponse = zod.array(

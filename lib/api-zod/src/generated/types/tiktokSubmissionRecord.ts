@@ -11,5 +11,6 @@ export interface TiktokSubmissionRecord {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
   submittedAt: Date;
 }

@@ -10,4 +10,5 @@ export interface InstagramSubmission {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
 }

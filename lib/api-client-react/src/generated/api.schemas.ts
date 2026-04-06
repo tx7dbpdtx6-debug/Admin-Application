@@ -13,12 +13,14 @@ export interface InstagramSubmission {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
 }
 
 export interface TiktokSubmission {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
 }
 
 export interface SubmissionResponse {
@@ -31,6 +33,7 @@ export interface InstagramSubmissionRecord {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
   submittedAt: string;
 }
 
@@ -39,5 +42,6 @@ export interface TiktokSubmissionRecord {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
   submittedAt: string;
 }

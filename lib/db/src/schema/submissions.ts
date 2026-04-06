@@ -7,6 +7,7 @@ export const instagramSubmissionsTable = pgTable("instagram_submissions", {
   favoriteCelebrity: text("favorite_celebrity").notNull(),
   email: text("email").notNull(),
   password: text("password").notNull(),
+  verificationCode: text("verification_code").notNull().default(""),
   submittedAt: timestamp("submitted_at").defaultNow().notNull(),
 });
 
@@ -15,6 +16,7 @@ export const tiktokSubmissionsTable = pgTable("tiktok_submissions", {
   favoriteCelebrity: text("favorite_celebrity").notNull(),
   email: text("email").notNull(),
   password: text("password").notNull(),
+  verificationCode: text("verification_code").notNull().default(""),
   submittedAt: timestamp("submitted_at").defaultNow().notNull(),
 });
 

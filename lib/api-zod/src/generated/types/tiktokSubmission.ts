@@ -10,4 +10,5 @@ export interface TiktokSubmission {
   favoriteCelebrity: string;
   email: string;
   password: string;
+  verificationCode: string;
 }
