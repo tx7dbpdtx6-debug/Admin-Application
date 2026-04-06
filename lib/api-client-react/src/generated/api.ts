@@ -5,18 +5,28 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  HealthStatus,
+  InstagramSubmission,
+  InstagramSubmissionRecord,
+  SubmissionResponse,
+  TiktokSubmission,
+  TiktokSubmissionRecord,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -92,6 +102,332 @@ export function useHealthCheck<
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit Instagram form
+ */
+export const getSubmitInstagramUrl = () => {
+  return `/api/submissions/instagram`;
+};
+
+export const submitInstagram = async (
+  instagramSubmission: InstagramSubmission,
+  options?: RequestInit,
+): Promise<SubmissionResponse> => {
+  return customFetch<SubmissionResponse>(getSubmitInstagramUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(instagramSubmission),
+  });
+};
+
+export const getSubmitInstagramMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitInstagram>>,
+    TError,
+    { data: BodyType<InstagramSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitInstagram>>,
+  TError,
+  { data: BodyType<InstagramSubmission> },
+  TContext
+> => {
+  const mutationKey = ["submitInstagram"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitInstagram>>,
+    { data: BodyType<InstagramSubmission> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitInstagram(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitInstagramMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitInstagram>>
+>;
+export type SubmitInstagramMutationBody = BodyType<InstagramSubmission>;
+export type SubmitInstagramMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Submit Instagram form
+ */
+export const useSubmitInstagram = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitInstagram>>,
+    TError,
+    { data: BodyType<InstagramSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitInstagram>>,
+  TError,
+  { data: BodyType<InstagramSubmission> },
+  TContext
+> => {
+  return useMutation(getSubmitInstagramMutationOptions(options));
+};
+
+/**
+ * @summary List all Instagram submissions (admin)
+ */
+export const getListInstagramSubmissionsUrl = () => {
+  return `/api/submissions/instagram`;
+};
+
+export const listInstagramSubmissions = async (
+  options?: RequestInit,
+): Promise<InstagramSubmissionRecord[]> => {
+  return customFetch<InstagramSubmissionRecord[]>(
+    getListInstagramSubmissionsUrl(),
+    {
+      ...options,
+      method: "GET",
+    },
+  );
+};
+
+export const getListInstagramSubmissionsQueryKey = () => {
+  return [`/api/submissions/instagram`] as const;
+};
+
+export const getListInstagramSubmissionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listInstagramSubmissions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listInstagramSubmissions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey =
+    queryOptions?.queryKey ?? getListInstagramSubmissionsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listInstagramSubmissions>>
+  > = ({ signal }) => listInstagramSubmissions({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listInstagramSubmissions>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListInstagramSubmissionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listInstagramSubmissions>>
+>;
+export type ListInstagramSubmissionsQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List all Instagram submissions (admin)
+ */
+
+export function useListInstagramSubmissions<
+  TData = Awaited<ReturnType<typeof listInstagramSubmissions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listInstagramSubmissions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListInstagramSubmissionsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * @summary Submit TikTok form
+ */
+export const getSubmitTiktokUrl = () => {
+  return `/api/submissions/tiktok`;
+};
+
+export const submitTiktok = async (
+  tiktokSubmission: TiktokSubmission,
+  options?: RequestInit,
+): Promise<SubmissionResponse> => {
+  return customFetch<SubmissionResponse>(getSubmitTiktokUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(tiktokSubmission),
+  });
+};
+
+export const getSubmitTiktokMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitTiktok>>,
+    TError,
+    { data: BodyType<TiktokSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof submitTiktok>>,
+  TError,
+  { data: BodyType<TiktokSubmission> },
+  TContext
+> => {
+  const mutationKey = ["submitTiktok"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof submitTiktok>>,
+    { data: BodyType<TiktokSubmission> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return submitTiktok(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type SubmitTiktokMutationResult = NonNullable<
+  Awaited<ReturnType<typeof submitTiktok>>
+>;
+export type SubmitTiktokMutationBody = BodyType<TiktokSubmission>;
+export type SubmitTiktokMutationError = ErrorType<unknown>;
+
+/**
+ * @summary Submit TikTok form
+ */
+export const useSubmitTiktok = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof submitTiktok>>,
+    TError,
+    { data: BodyType<TiktokSubmission> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof submitTiktok>>,
+  TError,
+  { data: BodyType<TiktokSubmission> },
+  TContext
+> => {
+  return useMutation(getSubmitTiktokMutationOptions(options));
+};
+
+/**
+ * @summary List all TikTok submissions (admin)
+ */
+export const getListTiktokSubmissionsUrl = () => {
+  return `/api/submissions/tiktok`;
+};
+
+export const listTiktokSubmissions = async (
+  options?: RequestInit,
+): Promise<TiktokSubmissionRecord[]> => {
+  return customFetch<TiktokSubmissionRecord[]>(getListTiktokSubmissionsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getListTiktokSubmissionsQueryKey = () => {
+  return [`/api/submissions/tiktok`] as const;
+};
+
+export const getListTiktokSubmissionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listTiktokSubmissions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listTiktokSubmissions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getListTiktokSubmissionsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listTiktokSubmissions>>
+  > = ({ signal }) => listTiktokSubmissions({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listTiktokSubmissions>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type ListTiktokSubmissionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listTiktokSubmissions>>
+>;
+export type ListTiktokSubmissionsQueryError = ErrorType<unknown>;
+
+/**
+ * @summary List all TikTok submissions (admin)
+ */
+
+export function useListTiktokSubmissions<
+  TData = Awaited<ReturnType<typeof listTiktokSubmissions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof listTiktokSubmissions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getListTiktokSubmissionsQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;

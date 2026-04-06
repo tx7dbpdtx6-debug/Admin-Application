@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: submissions
+    description: Form submission operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,71 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /submissions/instagram:
+    post:
+      operationId: submitInstagram
+      tags: [submissions]
+      summary: Submit Instagram form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstagramSubmission"
+      responses:
+        "201":
+          description: Submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionResponse"
+    get:
+      operationId: listInstagramSubmissions
+      tags: [submissions]
+      summary: List all Instagram submissions (admin)
+      responses:
+        "200":
+          description: List of submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InstagramSubmissionRecord"
+
+  /submissions/tiktok:
+    post:
+      operationId: submitTiktok
+      tags: [submissions]
+      summary: Submit TikTok form
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TiktokSubmission"
+      responses:
+        "201":
+          description: Submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SubmissionResponse"
+    get:
+      operationId: listTiktokSubmissions
+      tags: [submissions]
+      summary: List all TikTok submissions (admin)
+      responses:
+        "200":
+          description: List of submissions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TiktokSubmissionRecord"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +101,83 @@ components:
       required:
         - status
 
+    InstagramSubmission:
+      type: object
+      properties:
+        favoriteCelebrity:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - favoriteCelebrity
+        - email
+        - password
+
+    TiktokSubmission:
+      type: object
+      properties:
+        favoriteCelebrity:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - favoriteCelebrity
+        - email
+        - password
+
+    SubmissionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message
+
+    InstagramSubmissionRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+        favoriteCelebrity:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        submittedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - favoriteCelebrity
+        - email
+        - password
+        - submittedAt
+
+    TiktokSubmissionRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+        favoriteCelebrity:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        submittedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - favoriteCelebrity
+        - email
+        - password
+        - submittedAt

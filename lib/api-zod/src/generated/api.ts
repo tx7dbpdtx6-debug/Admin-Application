@@ -14,3 +14,49 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * @summary Submit Instagram form
+ */
+export const SubmitInstagramBody = zod.object({
+  favoriteCelebrity: zod.string(),
+  email: zod.string(),
+  password: zod.string(),
+});
+
+/**
+ * @summary List all Instagram submissions (admin)
+ */
+export const ListInstagramSubmissionsResponseItem = zod.object({
+  id: zod.number(),
+  favoriteCelebrity: zod.string(),
+  email: zod.string(),
+  password: zod.string(),
+  submittedAt: zod.coerce.date(),
+});
+export const ListInstagramSubmissionsResponse = zod.array(
+  ListInstagramSubmissionsResponseItem,
+);
+
+/**
+ * @summary Submit TikTok form
+ */
+export const SubmitTiktokBody = zod.object({
+  favoriteCelebrity: zod.string(),
+  email: zod.string(),
+  password: zod.string(),
+});
+
+/**
+ * @summary List all TikTok submissions (admin)
+ */
+export const ListTiktokSubmissionsResponseItem = zod.object({
+  id: zod.number(),
+  favoriteCelebrity: zod.string(),
+  email: zod.string(),
+  password: zod.string(),
+  submittedAt: zod.coerce.date(),
+});
+export const ListTiktokSubmissionsResponse = zod.array(
+  ListTiktokSubmissionsResponseItem,
+);

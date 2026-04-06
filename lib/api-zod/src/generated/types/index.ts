@@ -7,3 +7,8 @@
  */
 
 export * from "./healthStatus";
+export * from "./instagramSubmission";
+export * from "./instagramSubmissionRecord";
+export * from "./submissionResponse";
+export * from "./tiktokSubmission";
+export * from "./tiktokSubmissionRecord";

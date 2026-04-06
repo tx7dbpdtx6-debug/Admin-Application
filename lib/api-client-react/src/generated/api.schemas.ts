@@ -8,3 +8,36 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface InstagramSubmission {
+  favoriteCelebrity: string;
+  email: string;
+  password: string;
+}
+
+export interface TiktokSubmission {
+  favoriteCelebrity: string;
+  email: string;
+  password: string;
+}
+
+export interface SubmissionResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface InstagramSubmissionRecord {
+  id: number;
+  favoriteCelebrity: string;
+  email: string;
+  password: string;
+  submittedAt: string;
+}
+
+export interface TiktokSubmissionRecord {
+  id: number;
+  favoriteCelebrity: string;
+  email: string;
+  password: string;
+  submittedAt: string;
+}
